@@ -68,3 +68,11 @@ app-config:
     queue:
       product-stock: product-stock-update.queue
       sales-confirmation: sales-confirmation.queue
+
+springdoc:
+  pathsToMatch:
+    - /auth/**
+    - /api/**
+  swagger-ui:
+    use-root-path: true
+  show-actuator: true

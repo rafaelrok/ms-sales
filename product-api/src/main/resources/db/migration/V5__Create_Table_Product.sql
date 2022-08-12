@@ -1,4 +1,4 @@
-create table tb_product (
+CREATE TABLE IF NOT EXISTS tb_product (
     id                 integer      not null,
     name               varchar(255) not null,
     fk_category        integer      not null,
