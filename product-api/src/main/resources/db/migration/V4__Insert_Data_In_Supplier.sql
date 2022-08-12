@@ -1,0 +1,17 @@
+INSERT INTO tb_supplier (ID, NAME) VALUES
+(1000, 'Panini Comics'),
+(1001, 'Amazon'),
+(1002, 'Google'),
+(1003, 'Microsoft'),
+(1004, 'Apple'),
+(1005, 'Facebook'),
+(1006, 'Twitter'),
+(1007, 'Instagram'),
+(1008, 'Youtube'),
+(1009, 'Snapchat'),
+(1010, 'Spotify'),
+(1011, 'Netflix'),
+(1012, 'Hulu'),
+(1013, 'Disney'),
+(1014, 'Disney+'),
+(1015, 'Disney Junior');
