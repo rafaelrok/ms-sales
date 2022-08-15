@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @GetMapping(value="{id}", produces = { MediaType.APPLICATION_JSON})
-    @Operation(summary = "Finds all Product", description = "Finds all Product",
+    @Operation(summary = "Find by Product", description = "Find by Product",
             tags = {"Product"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",

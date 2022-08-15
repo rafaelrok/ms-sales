@@ -3,6 +3,10 @@ server:
 
 spring:
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   main:
     allow-bean-definition-overriding: true
 
@@ -73,6 +77,10 @@ springdoc:
   pathsToMatch:
     - /auth/**
     - /api/**
+    - /swagger-ui/**
   swagger-ui:
     use-root-path: true
+    enabled: true
   show-actuator: true
+
+
