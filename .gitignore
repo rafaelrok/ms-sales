@@ -1,0 +1,9 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/pagarme-api/src/main/resources/application.yml
+/product-api/src/main/resources/application.yml
+/auth-api/src/config/constants/secrets.js
+/sales-api/src/config/constants/secrets.js
