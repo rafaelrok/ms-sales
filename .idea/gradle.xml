@@ -5,12 +5,12 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/pagarme-api" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/payme-api" />
         <option name="gradleHome" value="C:/Gradle/gradle-7.5" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/pagarme-api" />
+            <option value="$PROJECT_DIR$/payme-api" />
           </set>
         </option>
       </GradleProjectSettings>
