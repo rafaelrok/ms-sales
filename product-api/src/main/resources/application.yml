@@ -13,6 +13,15 @@ spring:
   application:
     name: product-api
 
+  redis:
+    host: localhost
+    port: 6379
+    cache:
+      type: redis
+    redis:
+      time-to-live: 60_000
+    key-prefix: product-api
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:product-db}
@@ -83,4 +92,7 @@ springdoc:
     enabled: true
   show-actuator: true
 
-
+logging:
+  file:
+    name: product-api.log
+    path: D:/workspace/ms-sales/ELK_Stack/elk_product_api.log

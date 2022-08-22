@@ -8,6 +8,9 @@ import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 
+/**
+ * @author rafae
+ */
 @Data
 @Entity
 @NoArgsConstructor
