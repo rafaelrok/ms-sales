@@ -96,3 +96,4 @@ logging:
   file:
     name: product-api.log
     path: D:/workspace/ms-sales/ELK_Stack/elk_product_api.log
+

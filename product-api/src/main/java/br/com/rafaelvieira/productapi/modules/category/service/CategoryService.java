@@ -11,9 +11,11 @@ import br.com.rafaelvieira.productapi.modules.product.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
  * @version 1.0
  * Modulo responsável por manipular as operações de categoria
  */
+
 @Service
 public class CategoryService {
     private static final Logger logger = LoggerFactory.getLogger(CategoryController. class );
@@ -33,7 +36,7 @@ public class CategoryService {
     @Autowired
     private ProductService productService;
 
-    @Cacheable(value = "category", key = "#id")
+    @Cacheable(value = "categoryCache", key = "#id")
     public CategoryResponse findByIdResponse(Integer id) {
         logger .info( "Retrieving category by id" );
         try {
@@ -44,7 +47,7 @@ public class CategoryService {
         }
     }
 
-    @Cacheable(value = "category", key = "#root.methodName")
+    @Cacheable(value = "categoryCache", key = "#root.methodName")
     public List<CategoryResponse> findAll() {
         logger .info( "Retrieving all categories" );
         return categoryRepository
@@ -54,7 +57,7 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(value = "category", key = "#description")
+    @Cacheable(value = "categoryCache", key = "#description")
     public List<CategoryResponse> findByDescription(String description) {
         logger .info( "Retrieving category by description" );
         if (isEmpty(description)) {
@@ -68,6 +71,7 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "categoryCache", key = "#id")
     public Category findById(Integer id) {
         logger .info( "Retrieving category by id" );
         validateInformedId(id);
@@ -76,12 +80,16 @@ public class CategoryService {
                 .orElseThrow(() -> new ValidationException("There's no category for the given ID."));
     }
 
+    @Transactional
+    @CacheEvict(value = "categoryCache", allEntries = true)
     public CategoryResponse save(CategoryRequest request) {
         validateCategoryNameInformed(request);
         var category = categoryRepository.save(Category.of(request));
         return CategoryResponse.of(category);
     }
 
+    @Transactional
+    @CacheEvict(value = "categoryCache", allEntries = true)
     public CategoryResponse update(CategoryRequest request,
                                    Integer id) {
         logger.info( "Updating category" );
@@ -104,6 +112,8 @@ public class CategoryService {
         }
     }
 
+    @Transactional
+    @CacheEvict(value = "categoryCache", allEntries = true)
     public SuccessResponse delete(Integer id) {
         logger.info( "Deleting category by id" );
         validateInformedId(id);

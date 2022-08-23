@@ -13,6 +13,9 @@ import java.util.UUID;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+/**
+ * @author rafae
+ */
 public class AuthInterceptor implements HandlerInterceptor {
 
     private static final String AUTHORIZATION = "Authorization";

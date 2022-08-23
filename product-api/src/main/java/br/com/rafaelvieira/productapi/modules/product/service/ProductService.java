@@ -16,6 +16,8 @@ import br.com.rafaelvieira.productapi.modules.supplier.service.SupplierService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +52,7 @@ public class ProductService {
         this.categoryService = categoryService;
     }
 
+    @CacheEvict(value = "productCache", allEntries = true)
     public ProductResponse save(ProductRequest request) {
         validateProductDataInformed(request);
         validateCategoryAndSupplierIdInformed(request);
@@ -59,6 +62,7 @@ public class ProductService {
         return ProductResponse.of(product);
     }
 
+    @CacheEvict(value = "productCache", allEntries = true)
     public ProductResponse update(ProductRequest request,
                                   Integer id) {
         validateProductDataInformed(request);
@@ -93,6 +97,7 @@ public class ProductService {
         }
     }
 
+    @Cacheable(value = "productCache", key = "#root.methodName")
     public List<ProductResponse> findAll() {
         return productRepository
                 .findAll()
@@ -101,6 +106,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "productCache", key = "#name")
     public List<ProductResponse> findByName(String name) {
         if (isEmpty(name)) {
             throw new ValidationException("The product name must be informed.");
@@ -153,6 +159,7 @@ public class ProductService {
         return productRepository.existsBySupplierId(supplierId);
     }
 
+    @CacheEvict(value = "productCache", allEntries = true)
     public SuccessResponse delete(Integer id) {
         validateInformedId(id);
         if (!productRepository.existsById(id)) {

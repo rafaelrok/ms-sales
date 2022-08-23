@@ -9,6 +9,8 @@ import br.com.rafaelvieira.productapi.modules.supplier.dto.SupplierResponse;
 import br.com.rafaelvieira.productapi.modules.supplier.model.Supplier;
 import br.com.rafaelvieira.productapi.modules.supplier.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class SupplierService {
         this.productService = productService;
     }
 
+    @Cacheable(value = "supplierCache")
     public List<SupplierResponse> findAll() {
         return supplierRepository
                 .findAll()
@@ -36,6 +39,7 @@ public class SupplierService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "supplierCache", key = "#name")
     public List<SupplierResponse> findByName(String name) {
         if (isEmpty(name)) {
             throw new ValidationException("The supplier name must be informed.");
@@ -51,6 +55,7 @@ public class SupplierService {
         return SupplierResponse.of(findById(id));
     }
 
+    @Cacheable(value = "supplierCache", key = "#id")
     public Supplier findById(Integer id) {
         validateInformedId(id);
         return supplierRepository
@@ -58,12 +63,14 @@ public class SupplierService {
                 .orElseThrow(() -> new ValidationException("There's no supplier for the given ID."));
     }
 
+    @CacheEvict(value = "supplierCache", allEntries = true)
     public SupplierResponse save(SupplierRequest request) {
         validateSupplierNameInformed(request);
         var supplier = supplierRepository.save(Supplier.of(request));
         return SupplierResponse.of(supplier);
     }
 
+    @CacheEvict(value = "supplierCache", allEntries = true)
     public SupplierResponse update(SupplierRequest request,
                                    Integer id) {
         validateSupplierNameInformed(request);
@@ -80,6 +87,7 @@ public class SupplierService {
         }
     }
 
+    @CacheEvict(value = "supplierCache", allEntries = true)
     public SuccessResponse delete(Integer id) {
         validateInformedId(id);
         if (productService.existsBySupplierId(id)) {

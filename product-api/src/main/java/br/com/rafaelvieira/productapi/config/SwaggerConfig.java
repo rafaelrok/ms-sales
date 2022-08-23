@@ -54,7 +54,7 @@ public class SwaggerConfig {
 
     private ApiKey apiKey() {
         return new ApiKey("Authorization", AUTHORIZATION, "header");
-                new ApiKey("transactionid", TRANSACTION_ID, "header");
+                //new ApiKey("transactionid", TRANSACTION_ID, "header");
 
     }
 
