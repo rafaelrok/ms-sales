@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * @author rafae
+ */
 public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
 
     List<Supplier> findByNameIgnoreCaseContaining(String name);

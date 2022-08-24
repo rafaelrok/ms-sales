@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+/**
+ * @author rafae
+ */
 
 @Configuration
 @EnableWebSecurity
@@ -25,12 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/api/user/auth",
-                        "/auth/refresh",
-                        "/api-docs/**",
-                        "/swagger-ui.html**"
+                                    "/auth/refresh",
+                                    "/api-docs/**",
+                                    "/swagger-ui.html**",
+                                    "/dashboard-admin/**",
+                                    "/actuator/**"
                 ).permitAll()
                 .antMatchers("/api/**").authenticated()
-                .antMatchers("/users").denyAll()
+                //.antMatchers("/users").denyAll()
                 .and()
                 .cors();
     }
@@ -43,8 +48,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/configuration/**",
                 "/swagger-ui.html",
+                "/dashboard-admin/**",
                 "/webjars/**",
-                "/api/**"
+                "/api/**",
+                "/**.html"
         );
     }
 
