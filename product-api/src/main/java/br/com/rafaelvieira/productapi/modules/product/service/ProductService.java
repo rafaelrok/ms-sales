@@ -97,7 +97,7 @@ public class ProductService {
         }
     }
 
-    @Cacheable(value = "productCache", key = "#root.methodName")
+    //@Cacheable(value = "productCache", key = "#root.methodName")
     public List<ProductResponse> findAll() {
         return productRepository
                 .findAll()

@@ -6,6 +6,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author rafae
+ */
 public class RequestUtil {
 
     public static HttpServletRequest getCurrentRequest() {

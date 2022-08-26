@@ -4,6 +4,9 @@ import br.com.rafaelvieira.productapi.modules.category.model.Category;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
+/**
+ * @author rafae
+ */
 @Data
 public class CategoryResponse {
 

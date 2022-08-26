@@ -3,7 +3,10 @@
 *.iws
 *.iml
 *.ipr
-/pagarme-api/src/main/resources/application.yml
+*.application.properties
+*.application.yml
+
+/pagarme-api/src/main/resources/application.properties
 /product-api/src/main/resources/application.yml
 /auth-api/src/config/constants/secrets.js
 /sales-api/src/config/constants/secrets.js

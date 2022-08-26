@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import static br.com.rafaelvieira.productapi.config.RequestUtil.getCurrentRequest;
 
+/**
+ * @author rafae
+ */
 @Component
 public class FeignClientAuthInterceptor implements RequestInterceptor {
 

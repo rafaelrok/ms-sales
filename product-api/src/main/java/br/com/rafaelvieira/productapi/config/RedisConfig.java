@@ -13,14 +13,13 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 /**
  * @author rafae
  */
-
 @Configuration
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory(
-            @Value("${spring.redis.host:redis}") String redisHost) {
+            @Value("${spring.redis.host:localhost}") String redisHost) {
         RedisStandaloneConfiguration redisStandaloneConfiguration =
                 new RedisStandaloneConfiguration(redisHost);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);

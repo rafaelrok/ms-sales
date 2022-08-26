@@ -1,56 +1,62 @@
 package br.com.rafaelvieira.productapi.config;
 
-import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
-import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
-import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
-import org.springframework.boot.actuate.endpoint.ExposableEndpoint;
-import org.springframework.boot.actuate.endpoint.web.*;
-import org.springframework.boot.actuate.endpoint.web.annotation.ControllerEndpointsSupplier;
-import org.springframework.boot.actuate.endpoint.web.annotation.ServletEndpointsSupplier;
-import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import org.springframework.core.env.Environment;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.*;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author rafae
  */
 
-@EnableWebMvc
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
-    public static final String AUTHORIZATION = "Authorization";
-    private static final String TRANSACTION_ID = "transactionid";
+    @Value("${info.app.name}")
+    private String appName;
+    @Value("${info.app.description}")
+    private String appDescription;
+    @Value("${info.app.version}")
+    private String appVersion;
+    @Value("${info.app.license.name}")
+    private String appNameLicense;
+    @Value("${info.app.license.url}")
+    private String appUrlLicense;
+    @Value("${info.app.contact.name}")
+    private String contactName;
+    @Value("${info.app.contact.email}")
+    private String contactEmail;
+    @Value("${info.app.contact.url}")
+    private String appUrl;
+
 
     @Bean
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("REST full API (product-api) with Java 11 and Spring Boot 3")
-                .description("API para controle de estoque de produtos com integração a api de vendas")
-                .version("1.0.0")
-                .license("Apache License Version 2.0")
-                .licenseUrl("https://github.com/rafaelrok/ms-sales/blob/main/LICENSE")
+                .title(appName)
+                .description(appDescription)
+                .version(appVersion)
+                .license(appNameLicense)
+                .licenseUrl(appUrlLicense)
                         .contact(new Contact(
-                                "Rafael Vieira",
-                                "https://github.com/rafaelrok/ms-sales",
-                                "rafaelrok25@gmail.com"))
+                                contactName,
+                                appUrl,
+                                contactEmail))
                         .build();
     }
 
@@ -58,67 +64,21 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .securityContexts(Collections.singletonList(securityContext()))
-                .securitySchemes(List.of(apiKey()))
+                .globalOperationParameters(getRequiredParameters())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
-                .build()
-                .globalOperationParameters(Arrays.asList(
-                        new ParameterBuilder()
-                                .name(TRANSACTION_ID)
-                                .description("Transaction id")
-                                .name(AUTHORIZATION)
-                                .description("Token Authorization")
-                                .modelRef(new ModelRef("string"))
-                                .parameterType("header")
-                                .required(true)
-                                .build()));
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", AUTHORIZATION, "header");
-                //new ApiKey("transactionid", TRANSACTION_ID, "header");
-
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
                 .build();
     }
 
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-                = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return List.of(new SecurityReference("JWT", authorizationScopes));
+    private List<Parameter> getRequiredParameters() {
+        return Collections.singletonList(new ParameterBuilder()
+                .name("Authorization")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false)
+                .build()
+        );
     }
 
-    @Bean
-    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier,
-                                                                         ServletEndpointsSupplier servletEndpointsSupplier,
-                                                                         ControllerEndpointsSupplier controllerEndpointsSupplier,
-                                                                         EndpointMediaTypes endpointMediaTypes,
-                                                                         CorsEndpointProperties corsProperties,
-                                                                         WebEndpointProperties webEndpointProperties,
-                                                                         Environment environment) {
-        List<ExposableEndpoint<?>> allEndpoints = new ArrayList<>();
-        Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
-        allEndpoints.addAll(webEndpoints);
-        allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
-        allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
-        String basePath = webEndpointProperties.getBasePath();
-        EndpointMapping endpointMapping = new EndpointMapping(basePath);
-        boolean shouldRegisterLinksMapping = this.shouldRegisterLinksMapping(webEndpointProperties, environment, basePath);
-        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes, corsProperties.toCorsConfiguration(),
-                new EndpointLinksResolver(allEndpoints, basePath), shouldRegisterLinksMapping, null);
-    }
-
-
-    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
-        return webEndpointProperties.getDiscovery().isEnabled() &&
-                (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
-    }
 }
