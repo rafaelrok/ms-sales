@@ -1,5 +1,8 @@
 package br.com.rafaelvieira.productapi.utils;
 
+/**
+ * @author rafae
+ */
 public class MediaType {
 
     public static final String APPLICATION_JSON = "application/json";

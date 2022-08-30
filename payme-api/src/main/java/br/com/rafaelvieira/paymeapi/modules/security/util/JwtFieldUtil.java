@@ -14,8 +14,8 @@ public class JwtFieldUtil {
         try {
             return (String) claims.get("id");
         } catch (Exception ex) {
-            log.error("Erro ao tentar recuperar ID do JWT: {}", claims.toString());
-            throw new ValidationException("Erro ao tentar recuperar o campo ID do Token.");
+            log.error("Error trying to retrieve JWT ID: {}", claims.toString());
+            throw new ValidationException("Error trying to retrieve Token ID field.");
         }
     }
 
@@ -23,9 +23,9 @@ public class JwtFieldUtil {
         try {
             return (String) claims.get(field);
         } catch (Exception ex) {
-            log.error("Erro ao tentar recuperar o campo {} do JWT: {}", field, claims.toString());
+            log.error("Error trying to retrieve field {} from JWT: {}", field, claims.toString());
             throw new ValidationException(
-                    String.format("Erro ao tentar recuperar o campo %s do Token.", field)
+                    String.format("Error trying to retrieve Token field %s.", field)
             );
         }
     }

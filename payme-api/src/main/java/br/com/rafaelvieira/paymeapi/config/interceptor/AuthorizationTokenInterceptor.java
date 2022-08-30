@@ -1,8 +1,7 @@
-package br.com.rafaelvieira.productapi.config.interceptor;
+package br.com.rafaelvieira.paymeapi.config.interceptor;
 
-import br.com.rafaelvieira.productapi.modules.jwt.service.JwtService;
+import br.com.rafaelvieira.paymeapi.modules.security.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,23 +11,28 @@ import java.util.UUID;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+import static br.com.rafaelvieira.paymeapi.modules.utils.TokenUtil.extractTokenRequest;
+
 /**
  * @author rafae
  */
-public class AuthInterceptor implements HandlerInterceptor {
+
+public class AuthorizationTokenInterceptor implements HandlerInterceptor {
 
     private static final String AUTHORIZATION = "Authorization";
     private static final String TRANSACTION_ID = "transactionid";
-
+    private static final String ENDPOINT_PROTEGIDO = "/api/";
+    private static final String OPTIONS_METHOD = "OPTIONS";
     @Autowired
     private JwtService jwtService;
+
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
-                             Object handler) throws Exception {
-        if (isOptions(request)) {
-            return true;
+                             Object handler) {
+        if (requiresUrlWithAuthentication(request)) {
+            return isOptions(request) || authorizationHeaderWithValidToken(request);
         }
         if (isEmpty(request.getHeader(TRANSACTION_ID))) {
             //TODO Alternativa para gerar automaticamente o ID, para testes em desenvolvimento
@@ -42,7 +46,16 @@ public class AuthInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    private boolean requiresUrlWithAuthentication(HttpServletRequest request) {
+        return request.getRequestURI().contains(ENDPOINT_PROTEGIDO);
+    }
+
+    private boolean authorizationHeaderWithValidToken(HttpServletRequest request) {
+        var token = extractTokenRequest(request);
+        return jwtService.hasAuthenticatedUser(token);
+    }
+
     private boolean isOptions(HttpServletRequest request) {
-        return HttpMethod.OPTIONS.name().equals(request.getMethod());
+        return request.getMethod().equals(OPTIONS_METHOD);
     }
 }

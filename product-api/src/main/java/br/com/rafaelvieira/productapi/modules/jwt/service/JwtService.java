@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+/**
+ * @author rafae
+ */
 @Service
 public class JwtService {
 
