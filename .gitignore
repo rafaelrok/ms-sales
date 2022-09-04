@@ -1,13 +1,47 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-*.application.properties
-*.application.yml
+*.log
+out/
+.idea/codestream.xml
+!**/src/main/**/out/
+!**/src/test/**/out/
+!**/src/main/**/resources/application.yml
+!**/src/main/**/resources/application.properties
 
-/pagarme-api/src/main/resources/application.properties
-/product-api/src/main/resources/application.yml
-/auth-api/src/config/constants/secrets.js
-/sales-api/src/config/constants/secrets.js
-/security-api
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+pagarme-api/src/main/resources/application.properties
+product-api/src/main/resources/application.properties
+auth-api/src/config/constants/secrets.js
+sales-api/src/config/constants/secrets.js
+security-api/
