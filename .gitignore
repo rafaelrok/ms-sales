@@ -44,4 +44,4 @@ pagarme-api/src/main/resources/application.properties
 product-api/src/main/resources/application.properties
 auth-api/src/config/constants/secrets.js
 sales-api/src/config/constants/secrets.js
-security-api/
+#security-api/

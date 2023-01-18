@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * @author rafae
+ */
 @Data
 @Entity
 @Builder

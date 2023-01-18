@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ms-sales.iml" filepath="$PROJECT_DIR$/.idea/ms-sales.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/product-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/product-api.main.iml" />
     </modules>
   </component>
 </project>
