@@ -1,15 +1,11 @@
 package br.com.rafaelvieira.securityapi.dto;
 
-
-import br.com.rafaelvieira.securityapi.model.Role;
 import br.com.rafaelvieira.securityapi.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author rafae
@@ -25,7 +21,7 @@ public class UserDTO implements Serializable {
     private String lastName;
     private String email;
     private String password;
-    private List<Role> roles = new ArrayList<>();
+    private Set<RoleDTO> roles = new HashSet<>();
 
     public UserDTO() {
     }
@@ -34,8 +30,8 @@ public class UserDTO implements Serializable {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.email = user.getEmail();;
-        this.roles = user.getRoles();
+        this.email = user.getEmail();
+        user.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
 }

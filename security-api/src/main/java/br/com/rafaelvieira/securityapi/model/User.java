@@ -18,6 +18,7 @@ import java.util.*;
 @Setter
 @Entity
 @Builder
+@ToString
 @AllArgsConstructor
 @Table(name = "tb_user")
 public class User implements UserDetails, Serializable {
