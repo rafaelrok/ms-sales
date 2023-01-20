@@ -27,15 +27,24 @@ public class TokenValidation implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private UUID id;
-
     @Column(name = "token", nullable = false)
     private String token;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @Column(name = "expiry_date", nullable = false)
     private Date expiryDate;
+
+    public TokenValidation(String token) {
+        this.token = token;
+        this.expiryDate = calculateExpiryDate(EXPIRATION);
+    }
+
+    public TokenValidation(final String token, final User user) {
+        this.token = token;
+        this.user = user;
+        this.expiryDate = calculateExpiryDate(EXPIRATION);
+    }
 
     @Override
     public boolean equals(Object o) {

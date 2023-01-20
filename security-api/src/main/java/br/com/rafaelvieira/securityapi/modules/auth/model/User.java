@@ -3,7 +3,6 @@ package br.com.rafaelvieira.securityapi.modules.auth.model;
 import br.com.rafaelvieira.securityapi.modules.auth.dto.UserDTO;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,14 +20,12 @@ import java.util.*;
 @ToString
 @AllArgsConstructor
 @Table(name = "tb_user")
-public class User implements UserDetails, Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private UUID id;
-    @Column(name = "PASSWORD", nullable = false)
-    private String password;
 
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
@@ -39,8 +36,14 @@ public class User implements UserDetails, Serializable {
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;
+
+    @Column(name = "ENABLED", nullable = false)
+    private boolean enabled;
+
     @Column(name = "CREATED_AT", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_user_role",
@@ -58,13 +61,15 @@ public class User implements UserDetails, Serializable {
         this.email = email;
     }
 
-    public User(UUID id, String firstName, String lastName, String email, String password, LocalDateTime createdAt) {
+    public User(UUID id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, boolean enabled) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         getRoles().add(new Role(1L, "CLIENT"));
+        this.createdAt = createdAt;
+        this.enabled = enabled;
     }
 
     public User(UserDTO userDTO) {
@@ -73,6 +78,10 @@ public class User implements UserDetails, Serializable {
         this.lastName = userDTO.getLastName();
         this.email = userDTO.getEmail();
         this.password = userDTO.getPassword();
+        //userDTO.getRoles().forEach(role -> this.roles.add(new Role(role.getId(), role.getName())));
+        //this.enabled = userDTO.isEnabled();
+
+
     }
     public User(User user){
         super();
@@ -82,36 +91,6 @@ public class User implements UserDetails, Serializable {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.roles = user.getRoles();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
     }
 
 }

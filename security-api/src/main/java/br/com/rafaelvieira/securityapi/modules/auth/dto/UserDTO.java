@@ -22,6 +22,7 @@ public class UserDTO implements Serializable {
     private String email;
     private String password;
     private Set<RoleDTO> roles = new HashSet<>();
+    private boolean enabled;
 
     public UserDTO() {
     }
@@ -32,6 +33,7 @@ public class UserDTO implements Serializable {
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         user.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
+        this.enabled = user.isEnabled();
     }
 
 }

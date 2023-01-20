@@ -2,8 +2,10 @@ package br.com.rafaelvieira.securityapi.modules.auth.exceptions;
 
 import java.io.Serializable;
 
+/**
+ * @author rafae
+ */
 public class GenericResponse implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     private String message;

@@ -14,10 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.util.ArrayList;
@@ -33,6 +30,15 @@ import java.util.List;
 @ComponentScan(basePackages = { "br.com.rafaelvieira.securityapi" })
 @Import(SwaggerConfig.class)
 public class AppConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/*")
+                .allowedOrigins("*")
+                .allowedMethods("POST, PUT, GET, OPTIONS, DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(false).maxAge(3600);
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
