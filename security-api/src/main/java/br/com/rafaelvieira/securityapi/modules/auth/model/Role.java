@@ -1,4 +1,4 @@
-package br.com.rafaelvieira.securityapi.model;
+package br.com.rafaelvieira.securityapi.modules.auth.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

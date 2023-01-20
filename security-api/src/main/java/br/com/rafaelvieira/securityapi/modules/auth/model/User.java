@@ -1,6 +1,6 @@
-package br.com.rafaelvieira.securityapi.model;
+package br.com.rafaelvieira.securityapi.modules.auth.model;
 
-import br.com.rafaelvieira.securityapi.dto.UserDTO;
+import br.com.rafaelvieira.securityapi.modules.auth.dto.UserDTO;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

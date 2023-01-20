@@ -1,4 +1,4 @@
-package br.com.rafaelvieira.securityapi.config.middleware;
+package br.com.rafaelvieira.securityapi.modules.jwt.middleware;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +18,10 @@ public class AuthMiddleware {
 
     public static final String UNAUTHORIZED = "UNAUTHORIZED";
     public static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
-
-    //@Value("${security.jwt.secret}")
-    public static final String API_SECRET = "API_SECRET";
     private static final String EMPTY_SPACE = " ";
+
+    @Value("${app-config.secrets.api-secret}")
+    private String apiSecret;
 
     public void handle(HttpServletRequest request, HttpServletResponse response, javax.servlet.FilterChain chain) throws IOException {
         String authorization = request.getHeader("authorization");
@@ -40,7 +40,7 @@ public class AuthMiddleware {
             accessToken = authorization;
         }
         CompletableFuture<Void> future = new CompletableFuture<>();
-        Jwts.parser().setSigningKey(API_SECRET).parseClaimsJws(accessToken).getBody();
+        Jwts.parser().setSigningKey(apiSecret).parseClaimsJws(accessToken).getBody();
         future.thenAccept(decoded -> {
             request.setAttribute("authUser", decoded.equals("authUser"));
             try {

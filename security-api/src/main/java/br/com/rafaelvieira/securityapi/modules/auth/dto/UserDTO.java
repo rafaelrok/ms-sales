@@ -1,6 +1,6 @@
-package br.com.rafaelvieira.securityapi.dto;
+package br.com.rafaelvieira.securityapi.modules.auth.dto;
 
-import br.com.rafaelvieira.securityapi.model.User;
+import br.com.rafaelvieira.securityapi.modules.auth.model.User;
 import lombok.Getter;
 import lombok.Setter;
 

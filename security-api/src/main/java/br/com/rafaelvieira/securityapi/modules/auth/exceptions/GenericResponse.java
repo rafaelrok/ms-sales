@@ -1,4 +1,4 @@
-package br.com.rafaelvieira.securityapi.exceptions;
+package br.com.rafaelvieira.securityapi.modules.auth.exceptions;
 
 import java.io.Serializable;
 

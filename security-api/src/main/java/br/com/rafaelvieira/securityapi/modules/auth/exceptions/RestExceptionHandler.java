@@ -1,8 +1,8 @@
-package br.com.rafaelvieira.securityapi.exceptions;
+package br.com.rafaelvieira.securityapi.modules.auth.exceptions;
 
-import br.com.rafaelvieira.securityapi.exceptions.handler.ObjectAlreadyExistException;
-import br.com.rafaelvieira.securityapi.exceptions.handler.ObjectNotEnabledException;
-import br.com.rafaelvieira.securityapi.exceptions.handler.ObjectNotFoundException;
+import br.com.rafaelvieira.securityapi.modules.auth.exceptions.handler.ObjectAlreadyExistException;
+import br.com.rafaelvieira.securityapi.modules.auth.exceptions.handler.ObjectNotEnabledException;
+import br.com.rafaelvieira.securityapi.modules.auth.exceptions.handler.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

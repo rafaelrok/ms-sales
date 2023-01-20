@@ -1,6 +1,6 @@
-package br.com.rafaelvieira.securityapi.dto;
+package br.com.rafaelvieira.securityapi.modules.auth.dto;
 
-import br.com.rafaelvieira.securityapi.model.Role;
+import br.com.rafaelvieira.securityapi.modules.auth.model.Role;
 import lombok.*;
 
 import java.io.Serializable;
