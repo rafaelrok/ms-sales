@@ -90,10 +90,10 @@ public class SwaggerConfig {
     }
 
     private OAuth securitySchema() {
-        List<AuthorizationScope> authorizationScopeList = new ArrayList();
+        List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
         authorizationScopeList.add(new AuthorizationScope("read", "Read all"));
         authorizationScopeList.add(new AuthorizationScope("write", "Access All"));
-        List<GrantType> grantTypes = new ArrayList();
+        List<GrantType> grantTypes = new ArrayList<>();
         GrantType creGrant = new
                 ResourceOwnerPasswordCredentialsGrant(authLink+"/oauth/token");
         grantTypes.add(creGrant);

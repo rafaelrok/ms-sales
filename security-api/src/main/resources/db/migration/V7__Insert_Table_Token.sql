@@ -1,0 +1,10 @@
+INSERT INTO token_Validation (id, token, user_id, expiry_date) VALUES
+                                                (d7d4c664-6383-4a7e-af4f-d88d282dc15d, 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwiZXhwaXJ5X0RhdGUiOiIyMDI1LTAxLTIz' ||
+                                                                                       'VDE1OjE5OjM2LjY0MloiLCJjcmVhdGVfQXQiOiIyMDIzLTAxLTIzVDE1OjE5OjM2LjY0MloiLCJlbWFpb' ||
+                                                                                       'CI6ImFsZXhAZ21haWwuY29tIn0.7m6X2BdPry--hMSE7b_jOf5dr8aPfzwiZYYHiz4SFfA', 0a1e0094-9c6f-4719-be6e-5d1781ab02c0, TIMESTAMP WITH TIME ZONE '2025-01-23T15:19:36.642Z'),
+                                                (e7a3e801-05ed-4a6d-9146-c982cbb9a963, 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSLCBST0xFX0FETUlOIiwiZXhwaXJ5X0RhdGUiO' ||
+                                                                                       'iIyMDI1LTAxLTIzVDE1OjE5OjM2LjY0MloiLCJjcmVhdGVfQXQiOiIyMDIzLTAxLTIzVDE1OjE5OjM2LjY' ||
+                                                                                       '0MloiLCJlbWFpbCI6Im1hcmlhQGdtYWlsLmNvbSJ9.rNbvHSBSQjXoBESmD6rxg-MJBUQEzpQJw9OIEOI9hOc', 31d602c1-a8c6-481a-ba3d-636b978ea557, TIMESTAMP WITH TIME ZONE '2025-01-23T15:19:36.642Z'),
+                                                (bb17f4f0-48ad-4203-9bb0-808fc1dcaf65, 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsImV4cGlyeV9EYXRlIjoiMjAyNS0wMS0y' ||
+                                                                                       'M1QxNToxOTozNi42NDJaIiwiY3JlYXRlX0F0IjoiMjAyMy0wMS0yM1QxNToxOTozNi42NDJaIiwiZW1ha' ||
+                                                                                       'WwiOiJyYWZhZWxyb2syNUBnbWFpbC5jb20ifQ.MQtdN5ZpIu8rx_uvgMpiK6kRHTeY-58Za_T6XR4R5wI', 04817be2-1e04-4ac8-9163-20edc28c9315, TIMESTAMP WITH TIME ZONE '2025-01-23T15:19:36.642Z');

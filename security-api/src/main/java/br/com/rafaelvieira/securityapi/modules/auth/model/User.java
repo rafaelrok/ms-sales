@@ -1,8 +1,8 @@
 package br.com.rafaelvieira.securityapi.modules.auth.model;
 
 import br.com.rafaelvieira.securityapi.modules.auth.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +27,9 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private UUID id;
 
+    @Column(name = "PROVIDER_USER_ID")
+    private String providerUserId;
+
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
 
@@ -39,12 +42,18 @@ public class User implements Serializable {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "ENABLED", nullable = false)
+    @Column(name = "ENABLED", nullable = false, columnDefinition = "BIT", length = 1)
     private boolean enabled;
 
-    @Column(name = "CREATED_AT", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "MODIFIED_DATE", nullable = false)
+    protected Date modifiedDate;
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -53,6 +62,7 @@ public class User implements Serializable {
 
     public User(){
         getRoles().add(new Role(1L, "CLIENT"));
+        this.enabled = false;
     }
 
     public User(String firstName, String lastName, String email) {
@@ -61,14 +71,16 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public User(UUID id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, boolean enabled) {
+    public User(UUID id, String providerUserId, String firstName, String lastName, String email, String password, LocalDateTime createdAt, Date modifiedDate, boolean enabled) {
         this.id = id;
+        this.providerUserId = providerUserId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        getRoles().add(new Role(1L, "CLIENT"));
+        getRoles().add(new Role(1L, "ROLE_USER"));
         this.createdAt = createdAt;
+        this.modifiedDate = modifiedDate;
         this.enabled = enabled;
     }
 

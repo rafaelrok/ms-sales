@@ -32,6 +32,7 @@ public class TokenValidation implements Serializable{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expiry_date", nullable = false)
     private Date expiryDate;
 

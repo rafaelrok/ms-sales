@@ -21,7 +21,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_role")
 public class Role implements Serializable, GrantedAuthority {
-
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -47,5 +47,12 @@ public class Role implements Serializable, GrantedAuthority {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString(){
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Role [id=").append(id).append(", name=").append(name).append("]");
+        return builder.toString();
     }
 }

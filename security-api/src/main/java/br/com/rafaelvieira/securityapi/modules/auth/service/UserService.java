@@ -56,13 +56,15 @@ public class UserService {
         Optional<User> updateUser = userRepository.findById(user.getId());
         return updateUser.map(u -> userRepository.save(new User(
                 u.getId(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEmail(),
-                        u.getPassword(),
-                        u.isEnabled(),
-                        u.getCreatedAt(),
-                        u.getRoles())
+                                user.getProviderUserId(),
+                                user.getFirstName(),
+                                user.getLastName(),
+                                user.getEmail(),
+                                u.getPassword(),
+                                u.isEnabled(),
+                                u.getCreatedAt(),
+                                u.getModifiedDate(),
+                                u.getRoles())
                         ))
                 .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
     }

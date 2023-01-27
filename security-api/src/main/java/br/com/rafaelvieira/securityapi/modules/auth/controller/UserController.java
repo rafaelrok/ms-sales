@@ -38,7 +38,7 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> findAll() {
         List<User> users = userService.findAll();
-        List<UserDTO> listDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+        List<UserDTO> listDTO = users.stream().map(UserDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 
